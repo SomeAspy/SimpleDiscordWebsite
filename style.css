@@ -4,18 +4,14 @@
 html{
   margin:0;
   height: 100%;
+  overflow-x: hidden;
 }
 body{
-  margin:0;
-}
-.background{
   background: url(./images/background.webp);
   background-position:center;
-  background-attachment: initial;
+  background-attachment: fixed;
   background-repeat:no-repeat;
   background-size:cover;
-  height: 100vh;
-  width: 100vw;
 }
 .pageTitle{
   position: absolute;
@@ -23,7 +19,7 @@ body{
   left: 50%;
   transform: translate(-50%, -50%);
   color: #fff;
-  font-size: 2.5rem;
+  font-size: 4vw;
   font-family: 'Roboto', sans-serif;
   text-shadow: 0 0 10px #000;
   white-space: nowrap;
@@ -45,10 +41,10 @@ body{
   background-color:#7289DA;
   border-radius: 10px;
   padding:1%;
-  width:20%;
+  width:auto;
   text-align: center;
   color: #fff;
-  font-size: 200%;
+  font-size: 5vw;
   font-family: 'Roboto', sans-serif;
   font-weight: bold;
   box-shadow: 0 0 10px #000;
@@ -99,16 +95,49 @@ body{
 .userElement:hover{
   transform:scale(1.05);
 }
-footer{
-  position:absolute;
-  left:50%;
-  bottom:10px;
-  transform:translate(-50%,-50%);
-  margin:0 auto;
-  color:#FFF;
-  font-family:Roboto,sans-serif;
-  font-size:15px;
+.online{
+  border:3px solid #3AA55D;
 }
-a{
-  color: #fff;
+.dnd{
+  border:3px solid #dc3d40;
+}
+.idle{
+  border:3px solid #eea019;
+}
+.offline{
+  border:3px solid #747f8d;
+}
+@media only screen and (max-width: 600px) {
+  .pageTitle{
+    font-size: 6vw;
+  }
+  .invite{
+    font-size: 10vw;
+  }
+  .users{
+    position: absolute;
+    display:grid;
+    grid-template-columns:auto auto;
+    grid-gap: 30px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, 0);
+  }
+  html{
+    overflow-y:scroll;
+  }
+  .userElement{
+    height:30vh;
+  }
+  .PFPElement
+  {
+    width:auto;
+    transform: translate(-60%,-100%)
+  }
+  .usernameElement{
+    font-size: 100%;
+  }
+  .userElement:hover{
+    transform:scale(1.00);
+  }
 }

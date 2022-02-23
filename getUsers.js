@@ -9,7 +9,6 @@ const whitelistedUsers=[
     '152921834835279872',// ferraz
     '245563449772474378',// lck
     '225869227033231361',// onlyus
-    '336204702783897603',//possessive
     '928791980660621403',// soe
     '171576345090981888',// strolly
     '202244634800422913' // sun
@@ -27,7 +26,7 @@ window.onload=()=>{
                 continue; // if you dont have a pfp fuck you
             };
             const UserObject={
-                username:`${userData.username}\n#${userData.discriminator}`,
+                username:`${userData.username}#${userData.discriminator}`,
                 avatar:`https://cdn.discordapp.com/avatars/${userData.id}/${userData.avatar}.png`,
                 status:rawUserData[1].discord_status
             };
@@ -38,7 +37,7 @@ window.onload=()=>{
             document.getElementById('userList').appendChild(userElement);
             //PFP ELEMENT, SUB-ELEMENT OF USER ELEMENT
             const PFPElement=document.createElement('img');
-            PFPElement.classList.add('PFPElement');
+            PFPElement.classList.add('PFPElement',UserObject.status);
             PFPElement.src=UserObject.avatar;
             userElement.appendChild(PFPElement);
             //USERNAME ELEMENT, SUB-ELEMENT OF USER ELEMENT
