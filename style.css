@@ -1,29 +1,22 @@
 /*
-  Made by:
-  SomeAspy#9999 (https://aspy.dev)
-  Sun#1000
+  Made by: SomeAspy#9999 (https://aspy.dev)
 */
-
 html{
   margin:0;
   height: 100%;
 }
-
 body{
   margin:0;
-  overflow: hidden;
 }
-
 .background{
   background: url(./images/background.webp);
   background-position:center;
-  background-attachment: scroll;
+  background-attachment: initial;
   background-repeat:no-repeat;
   background-size:cover;
   height: 100vh;
   width: 100vw;
 }
-
 .pageTitle{
   position: absolute;
   top: 20%;
@@ -35,13 +28,15 @@ body{
   text-shadow: 0 0 10px #000;
   white-space: nowrap;
 }
-
 .users{
+  position: absolute;
   display:grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  grid-gap: 20px;
+  grid-template-columns:auto auto auto auto auto;
+  grid-gap: 30px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, 0);
 }
-
 .invite{
   position: absolute;
   top: 35%;
@@ -57,6 +52,8 @@ body{
   font-family: 'Roboto', sans-serif;
   font-weight: bold;
   box-shadow: 0 0 10px #000;
+  text-decoration: none;
+  color: #fff;
 }
 .invite:hover{
   background-color:#4E5D94;
@@ -64,8 +61,54 @@ body{
   transition-timing-function: ease-in-out;
   transition-duration: 0.15s;
 }
-
+.userElement{
+  border-radius: 25px;
+  width: 20vh;
+  height: 20vh;
+  text-align: center;
+  color: rgb(247, 247, 255);
+  background:
+      linear-gradient(
+          rgba(0, 0, 0, 0.5),
+          rgba(0, 0, 0, 0.5)
+      );
+  white-space: normal;
+  text-decoration:none;
+  display: flex;
+  flex-direction: column;
+  transition: all .2s ease-in-out;
+}
+.PFPElement{
+  margin:auto;
+  position: relative;
+  top: 60%;
+  left: 50%;
+  transform: translate(-100%, -100%);
+  width: 50%;
+  height: 50%;
+  border-radius: 100%;
+}
+.usernameElement{
+  margin-top:15%;
+  margin-bottom: 15%;
+  font-size: 150%;
+  font-family: 'Roboto', sans-serif;
+  text-align: center;
+  flex-wrap: wrap;
+}
+.userElement:hover{
+  transform:scale(1.05);
+}
+footer{
+  position:absolute;
+  left:50%;
+  bottom:10px;
+  transform:translate(-50%,-50%);
+  margin:0 auto;
+  color:#FFF;
+  font-family:Roboto,sans-serif;
+  font-size:15px;
+}
 a{
-  text-decoration: none;
   color: #fff;
 }

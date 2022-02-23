@@ -1,25 +1,37 @@
 /*
-Made by:
-SomeAspy#9999 (https://aspy.dev)
-Sun#1000
+Made by: SomeAspy#9999 (https://aspy.dev)
 */
+'use strict';
+const whitelistedUsers=[
+    '290257733482053642',// ax
+    '720710673180524646',// dasiria
+    '386215881966878721',//dzn
+    '152921834835279872',// ferraz
+    '245563449772474378',// lck
+    '225869227033231361',// onlyus
+    '336204702783897603',//possessive
+    '928791980660621403',// soe
+    '171576345090981888',// strolly
+    '202244634800422913' // sun
+];
 window.onload=()=>{
     const lanyardSocket=new WebSocket('wss://tcla.aspy.dev/socket');
     lanyardSocket.onopen=()=>{
         lanyardSocket.send('{"op":2,"d":{"subscribe_to_all":true}}');
     };
     lanyardSocket.onmessage=(message)=>{
-        lanyardSocket.close();
         const{d}=JSON.parse(message.data);
         for(const rawUserData of Object.entries(d)){
-            const userData=rawUserData[1].discord_user; // 1 is the User's Presence
-            if(!userData?.username){ //Lanyard returns garbage occasionally
-                continue;
+            const userData=rawUserData[1]?.discord_user; // 1 is the User's Presence
+            if(!userData?.username||userData?.avatar===null||!whitelistedUsers.includes(userData?.id)){ // Fuck off im lazy
+                continue; // if you dont have a pfp fuck you
             };
             const UserObject={
-                username:`${userData.username}#${userData.discriminator}`,
+                username:`${userData.username}\n#${userData.discriminator}`,
                 avatar:`https://cdn.discordapp.com/avatars/${userData.id}/${userData.avatar}.png`,
+                status:rawUserData[1].discord_status
             };
+            console.log(UserObject.status)
             //MAIN USER ELEMENT, SUB ELEMENT OF LIST ELEMENT
             const userElement=document.createElement('div');
             userElement.classList.add('userElement');
