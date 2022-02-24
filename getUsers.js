@@ -14,33 +14,28 @@ const whitelistedUsers=[
     '202244634800422913',// sun
     //'516750892372852754',//aspy, for testing.
 ];
-window.onload=async()=>{
+window.onload=()=>{
     const lanyardSocket=new WebSocket('wss://tcla.aspy.dev/socket');
     lanyardSocket.onopen=()=>{
-        lanyardSocket.send('{"op":2,"d":{"subscribe_to_all":true}}');
+        lanyardSocket.send(JSON.stringify({op:2,d:{subscribe_to_ids:whitelistedUsers}}));
     };
     lanyardSocket.onmessage=async(message)=>{
-        const{d}=JSON.parse(message.data);
-        for(const rawUserData of Object.entries(d)){
-            const userData=rawUserData[1]?.discord_user; // 1 is the User's Presence
-            if(!userData?.username||!whitelistedUsers.includes(userData?.id)){ // Fuck off im lazy
-                continue;
-            };
-            let UserObject={
+        const{d}=await JSON.parse(message.data);
+        for(const rawUserData of Object.values(d)){
+            const userData=rawUserData?.discord_user;
+            if(!userData)continue;
+            const UserObject={
                 username:`${userData.username}#${userData.discriminator}`,
-                avatar:'waiting...',
-                status:rawUserData[1].discord_status
+                status:rawUserData.discord_status
             };
-            await fetch('https://cdn.discordapp.com/avatars/'+userData.id+'/'+userData.avatar+'.gif').then(res=>{ //This will throw errors when the user has a static avatar
-                if(res.ok){
-                    UserObject.avatar=res.url; //User Avatar is Animated
-                }else if(res.status==404){
-                    UserObject.avatar='./images/defaultAvatar.webp'; //User has no Avatar
-                }else if(res.status==415){
-                    UserObject.avatar=`https://cdn.discordapp.com/avatars/${userData.id}/${userData.avatar}.png`; //User Avatar is Static
-                };
-            });
             lanyardSocket.close();
+            if(userData.avatar?.startsWith('a_')){
+                UserObject.avatar=`https://cdn.discordapp.com/avatars/${userData.id}/${userData.avatar}.gif`;
+            }else if(userData.avatar==null){
+                UserObject.avatar='./images/defaultAvatar.webp';
+            }else{
+                UserObject.avatar=`https://cdn.discordapp.com/avatars/${userData.id}/${userData.avatar}.png`;
+            }
             //MAIN USER ELEMENT, SUB ELEMENT OF LIST ELEMENT
             const userElement=document.createElement('div');
             userElement.classList.add('userElement');
@@ -57,4 +52,9 @@ window.onload=async()=>{
             userElement.appendChild(usernameElement);
         };
     };
+    async function getOnline(){
+        const online=await (await fetch('https://canary.discord.com/api/guilds/932140058507612251/widget.json')).json();
+        document.getElementById('online').innerHTML=online.presence_count+' On-line';
+    };
+    getOnline();
 };
