@@ -2,7 +2,7 @@
 Made by: SomeAspy#9999 (https://aspy.dev)
 */
 'use strict';
-const whitelistedUsers=[
+const whitelistedUsers=[ // set the users you want to display
     '290257733482053642',// ax
     '720710673180524646',// dasiria
     '386215881966878721',// dzn
@@ -14,8 +14,9 @@ const whitelistedUsers=[
     '202244634800422913',// sun
     //'516750892372852754',//aspy, for testing.
 ];
+
 window.onload=()=>{
-    const lanyardSocket=new WebSocket('wss://tcla.aspy.dev/socket');
+    const lanyardSocket=new WebSocket('wss://tcla.aspy.dev/socket'); //change this to the lanyard server or self host lanyard.
     lanyardSocket.onopen=()=>{
         lanyardSocket.send(JSON.stringify({op:2,d:{subscribe_to_ids:whitelistedUsers}}));
     };
@@ -53,7 +54,7 @@ window.onload=()=>{
         };
     };
     async function getOnline(){
-        const online=await (await fetch('https://canary.discord.com/api/guilds/932140058507612251/widget.json')).json();
+        const online=await (await fetch('https://canary.discord.com/api/guilds/932140058507612251/widget.json')).json(); //change this to the server you want to get the users from
         document.getElementById('online').innerHTML=online.presence_count+' On-line';
     };
     getOnline();
